@@ -1,0 +1,475 @@
+config("mpir_test_config") {
+  include_dirs = [".", ".."]
+  defines = [
+    "__GMP_LIBGMP_DLL",
+    "_CRT_SECURE_NO_WARNINGS",
+    ]
+}
+
+template("mpir_test") {
+  executable(target_name) {
+    forward_variables_from(invoker, "*")
+    deps = [
+      "..:mpir_shared",
+      #"..:mpir_static",
+      ":mpir_test_framework"
+    ]
+    configs = [":mpir_test_config"]
+  }
+}
+
+source_set("mpir_test_framework") {
+  sources = [
+    "memory.c",
+    "misc.c",
+    "refmpf.c",
+    "refmpn.c",
+    "refmpq.c",
+    "refmpz.c",
+    "trace.c",
+
+    "tests.h",
+  ]
+
+  configs = [":mpir_test_config"]
+}
+
+group("mpir_tests") {
+  deps = [
+    ":mpirtest_t-bswap",
+    ":mpirtest_t-constants",
+    ":mpirtest_t-count_zeros",
+    ":mpirtest_t-gmpmax",
+    ":mpirtest_t-hightomask",
+    ":mpirtest_t-modlinv",
+    ":mpirtest_t-parity",
+    ":mpirtest_t-popct-popc",
+    ":mpirtest_t-sub",
+
+    ":mpirtest_cxx_t-assign",
+    ":mpirtest_cxx_t-binary",
+    ":mpirtest_cxx_t-cast",
+    ":mpirtest_cxx_t-constr",
+    ":mpirtest_cxx_t-headers",
+    ":mpirtest_cxx_t-istream",
+    ":mpirtest_cxx_t-localecxx",
+    ":mpirtest_cxx_t-misc",
+    ":mpirtest_cxx_t-ops",
+    ":mpirtest_cxx_t-ostream",
+    ":mpirtest_cxx_t-prec",
+    ":mpirtest_cxx_t-randcxx",
+    ":mpirtest_cxx_t-ternary",
+    ":mpirtest_cxx_t-unary",
+
+    ":mpirtest_fft_t-adjust",
+    ":mpirtest_fft_t-adjust_sqrt2",
+    ":mpirtest_fft_t-butterfly",
+    ":mpirtest_fft_t-butterfly_lshB",
+    ":mpirtest_fft_t-butterfly_rshB",
+    ":mpirtest_fft_t-butterfly_sqrt2",
+    ":mpirtest_fft_t-butterfly_twiddle",
+    ":mpirtest_fft_t-div_2expmod_2expp1",
+    ":mpirtest_fft_t-fft_ifft_mfa_trunc_sqrt2",
+    ":mpirtest_fft_t-fft_ifft_negacyclic",
+    ":mpirtest_fft_t-fft_ifft_radix2",
+    ":mpirtest_fft_t-fft_ifft_trunc",
+    ":mpirtest_fft_t-fft_ifft_trunc_sqrt2",
+    ":mpirtest_fft_t-mulmod_2expp1",
+    ":mpirtest_fft_t-mul_2expmod_2expp1",
+    ":mpirtest_fft_t-mul_fft_main",
+    ":mpirtest_fft_t-mul_mfa_trunc_sqrt2",
+    ":mpirtest_fft_t-mul_trunc_sqrt2",
+    ":mpirtest_fft_t-normmod_2expp1",
+    ":mpirtest_fft_t-split_combine_bits",
+
+    ":mpirtest_mpf_t-add",
+    ":mpirtest_mpf_t-cmp_d",
+    ":mpirtest_mpf_t-cmp_si",
+    ":mpirtest_mpf_t-conv",
+    ":mpirtest_mpf_t-div",
+    ":mpirtest_mpf_t-dm2exp",
+    ":mpirtest_mpf_t-eq",
+    ":mpirtest_mpf_t-fits",
+    ":mpirtest_mpf_t-get_d",
+    ":mpirtest_mpf_t-get_d_2exp",
+    ":mpirtest_mpf_t-get_si",
+    ":mpirtest_mpf_t-get_ui",
+    ":mpirtest_mpf_t-gsprec",
+    ":mpirtest_mpf_t-inp_str",
+    ":mpirtest_mpf_t-int_p",
+    ":mpirtest_mpf_t-muldiv",
+    ":mpirtest_mpf_t-mul_ui",
+    ":mpirtest_mpf_t-set",
+    ":mpirtest_mpf_t-set_q",
+    ":mpirtest_mpf_t-set_si",
+    ":mpirtest_mpf_t-set_ui",
+    ":mpirtest_mpf_t-sqrt",
+    ":mpirtest_mpf_t-sqrt_ui",
+    ":mpirtest_mpf_t-sub",
+    ":mpirtest_mpf_t-trunc",
+    ":mpirtest_mpf_t-ui_div",
+
+    ":mpirtest_mpn_t-addadd_n",
+    ":mpirtest_mpn_t-addsub_n",
+    ":mpirtest_mpn_t-aors_1",
+    ":mpirtest_mpn_t-asmtype",
+    ":mpirtest_mpn_t-dc_bdiv_q",
+    ":mpirtest_mpn_t-dc_bdiv_qr",
+    ":mpirtest_mpn_t-dc_bdiv_qr_n",
+    ":mpirtest_mpn_t-dc_bdiv_q_n",
+    ":mpirtest_mpn_t-dc_divappr_q",
+    ":mpirtest_mpn_t-dc_div_q",
+    ":mpirtest_mpn_t-dc_div_qr",
+    ":mpirtest_mpn_t-dc_div_qr_n",
+    ":mpirtest_mpn_t-divebyff",
+    ":mpirtest_mpn_t-divebyfobm1",
+    ":mpirtest_mpn_t-divrem_1",
+    ":mpirtest_mpn_t-fat",
+    ":mpirtest_mpn_t-gcdext",
+    ":mpirtest_mpn_t-get_d",
+    ":mpirtest_mpn_t-hgcd",
+    ":mpirtest_mpn_t-instrument",
+    ":mpirtest_mpn_t-invert",
+    ":mpirtest_mpn_t-inv_divappr_q",
+    ":mpirtest_mpn_t-inv_divappr_q_n",
+    ":mpirtest_mpn_t-inv_div_q",
+    ":mpirtest_mpn_t-inv_div_qr",
+    ":mpirtest_mpn_t-inv_div_qr_n",
+    ":mpirtest_mpn_t-iord_u",
+    ":mpirtest_mpn_t-logic",
+    ":mpirtest_mpn_t-lorrshift1",
+    ":mpirtest_mpn_t-matrix22",
+    ":mpirtest_mpn_t-mp_bases",
+    ":mpirtest_mpn_t-mullowhigh",
+    ":mpirtest_mpn_t-mullow_basecase",
+    ":mpirtest_mpn_t-mulmid",
+    ":mpirtest_mpn_t-mulmod_2expm1",
+    ":mpirtest_mpn_t-mulmod_2expp1",
+    ":mpirtest_mpn_t-neg",
+    ":mpirtest_mpn_t-perfsqr",
+    ":mpirtest_mpn_t-redc_1",
+    ":mpirtest_mpn_t-sb_bdiv_q",
+    ":mpirtest_mpn_t-sb_bdiv_qr",
+    ":mpirtest_mpn_t-sb_divappr_q",
+    ":mpirtest_mpn_t-sb_div_q",
+    ":mpirtest_mpn_t-sb_div_qr",
+    ":mpirtest_mpn_t-scan",
+    ":mpirtest_mpn_t-sizeinbase",
+    ":mpirtest_mpn_t-subadd_n",
+    ":mpirtest_mpn_t-tdiv_q",
+    ":mpirtest_mpn_t-tdiv_qr",
+
+
+    ":mpirtest_mpq_t-aors",
+    ":mpirtest_mpq_t-cmp",
+    ":mpirtest_mpq_t-cmp_si",
+    ":mpirtest_mpq_t-cmp_ui",
+    ":mpirtest_mpq_t-cmp_z",
+    ":mpirtest_mpq_t-equal",
+    ":mpirtest_mpq_t-get_d",
+    ":mpirtest_mpq_t-get_str",
+    ":mpirtest_mpq_t-inp_str",
+    ":mpirtest_mpq_t-md_2exp",
+    ":mpirtest_mpq_t-set_f",
+    ":mpirtest_mpq_t-set_str",
+
+
+    ":mpirtest_mpz_bit",
+    ":mpirtest_mpz_convert",
+    ":mpirtest_mpz_dive",
+    ":mpirtest_mpz_dive_ui",
+    ":mpirtest_mpz_io",
+    ":mpirtest_mpz_logic",
+
+
+    ":mpirtest_mpz_t-addsub",
+    ":mpirtest_mpz_t-aorsmul",
+    ":mpirtest_mpz_t-bin",
+    ":mpirtest_mpz_t-cdiv_ui",
+    ":mpirtest_mpz_t-cmp",
+    ":mpirtest_mpz_t-cmp_d",
+    ":mpirtest_mpz_t-cmp_si",
+    ":mpirtest_mpz_t-cong",
+    ":mpirtest_mpz_t-cong_2exp",
+    ":mpirtest_mpz_t-divis",
+    ":mpirtest_mpz_t-divis_2exp",
+    ":mpirtest_mpz_t-div_2exp",
+    ":mpirtest_mpz_t-export",
+    ":mpirtest_mpz_t-fac_ui",
+    ":mpirtest_mpz_t-fdiv",
+    ":mpirtest_mpz_t-fdiv_ui",
+    ":mpirtest_mpz_t-fib_ui",
+    ":mpirtest_mpz_t-fits",
+    ":mpirtest_mpz_t-gcd",
+    ":mpirtest_mpz_t-gcd_ui",
+    ":mpirtest_mpz_t-get_d",
+    ":mpirtest_mpz_t-get_d_2exp",
+    ":mpirtest_mpz_t-get_si",
+    ":mpirtest_mpz_t-get_sx",
+    ":mpirtest_mpz_t-get_ux",
+    ":mpirtest_mpz_t-hamdist",
+    ":mpirtest_mpz_t-import",
+    ":mpirtest_mpz_t-inp_str",
+    ":mpirtest_mpz_t-io_raw",
+    ":mpirtest_mpz_t-jac",
+    ":mpirtest_mpz_t-lcm",
+    ":mpirtest_mpz_t-likely_prime_p",
+    ":mpirtest_mpz_t-limbs",
+    ":mpirtest_mpz_t-lucnum_ui",
+    ":mpirtest_mpz_t-mfac_uiui",
+    ":mpirtest_mpz_t-mul",
+    ":mpirtest_mpz_t-mul_i",
+    ":mpirtest_mpz_t-next_prime_candidate",
+    ":mpirtest_mpz_t-oddeven",
+    ":mpirtest_mpz_t-perfpow",
+    ":mpirtest_mpz_t-perfsqr",
+    ":mpirtest_mpz_t-popcount",
+    ":mpirtest_mpz_t-pow",
+    ":mpirtest_mpz_t-powm",
+    ":mpirtest_mpz_t-powm_ui",
+    ":mpirtest_mpz_t-pprime_p",
+    ":mpirtest_mpz_t-primorial_ui",
+    ":mpirtest_mpz_t-root",
+    ":mpirtest_mpz_t-scan",
+    ":mpirtest_mpz_t-set_d",
+    ":mpirtest_mpz_t-set_f",
+    ":mpirtest_mpz_t-set_si",
+    ":mpirtest_mpz_t-set_str",
+    ":mpirtest_mpz_t-set_sx",
+    ":mpirtest_mpz_t-set_ux",
+    ":mpirtest_mpz_t-sizeinbase",
+    ":mpirtest_mpz_t-sqrtrem",
+    ":mpirtest_mpz_t-tdiv",
+    ":mpirtest_mpz_t-tdiv_ui",
+    ":mpirtest_mpz_t-trial_division",
+
+    ":mpirtest_rand_t-iset",
+    ":mpirtest_rand_t-lc2exp",
+    ":mpirtest_rand_t-mt",
+    ":mpirtest_rand_t-rand",
+    ":mpirtest_rand_t-urbui",
+    ":mpirtest_rand_t-urmui",
+    ":mpirtest_rand_t-urndmm",
+  ]
+}
+
+# mpir_test("mpirtest_mpirtest_mpz_t_mul") { sources = ["mpz/t-mul.c"] }
+
+mpir_test("mpirtest_t-bswap") { sources = ["t-bswap.c"] }
+mpir_test("mpirtest_t-constants") { sources = ["t-constants.c"] }
+mpir_test("mpirtest_t-count_zeros") { sources = ["t-count_zeros.c"] }
+mpir_test("mpirtest_t-gmpmax") { sources = ["t-gmpmax.c"] }
+mpir_test("mpirtest_t-hightomask") { sources = ["t-hightomask.c"] }
+mpir_test("mpirtest_t-modlinv") { sources = ["t-modlinv.c"] }
+mpir_test("mpirtest_t-parity") { sources = ["t-parity.c"] }
+mpir_test("mpirtest_t-popct-popc") { sources = ["t-popc.c"] }
+mpir_test("mpirtest_t-sub") { sources = ["t-sub.c"] }
+
+mpir_test("mpirtest_cxx_t-assign") { sources = ["cxx/t-assign.cc"] }
+mpir_test("mpirtest_cxx_t-binary") { sources = ["cxx/t-binary.cc"] }
+mpir_test("mpirtest_cxx_t-cast") { sources = ["cxx/t-cast.cc"] }
+mpir_test("mpirtest_cxx_t-constr") { sources = ["cxx/t-constr.cc"] }
+mpir_test("mpirtest_cxx_t-headers") { sources = ["cxx/t-headers.cc"] }
+mpir_test("mpirtest_cxx_t-istream") { sources = ["cxx/t-istream.cc"] }
+mpir_test("mpirtest_cxx_t-localecxx") { sources = ["cxx/t-locale.cc"] }
+mpir_test("mpirtest_cxx_t-misc") { sources = ["cxx/t-misc.cc"] }
+mpir_test("mpirtest_cxx_t-ops") { sources = ["cxx/t-ops.cc"] }
+mpir_test("mpirtest_cxx_t-ostream") { sources = ["cxx/t-ostream.cc"] }
+mpir_test("mpirtest_cxx_t-prec") { sources = ["cxx/t-prec.cc"] }
+mpir_test("mpirtest_cxx_t-randcxx") { sources = ["cxx/t-rand.cc"] }
+mpir_test("mpirtest_cxx_t-ternary") { sources = ["cxx/t-ternary.cc"] }
+mpir_test("mpirtest_cxx_t-unary") { sources = ["cxx/t-unary.cc"] }
+
+mpir_test("mpirtest_fft_t-adjust") { sources = ["fft/t-adjust.c"] }
+mpir_test("mpirtest_fft_t-adjust_sqrt2") { sources = ["fft/t-adjust_sqrt2.c"] }
+mpir_test("mpirtest_fft_t-butterfly") { sources = ["fft/t-butterfly.c"] }
+mpir_test("mpirtest_fft_t-butterfly_lshB") { sources = ["fft/t-butterfly_lshB.c"] }
+mpir_test("mpirtest_fft_t-butterfly_rshB") { sources = ["fft/t-butterfly_rshB.c"] }
+mpir_test("mpirtest_fft_t-butterfly_sqrt2") { sources = ["fft/t-butterfly_sqrt2.c"] }
+mpir_test("mpirtest_fft_t-butterfly_twiddle") { sources = ["fft/t-butterfly_twiddle.c"] }
+mpir_test("mpirtest_fft_t-div_2expmod_2expp1") { sources = ["fft/t-div_2expmod_2expp1.c"] }
+mpir_test("mpirtest_fft_t-fft_ifft_mfa_trunc_sqrt2") { sources = ["fft/t-fft_ifft_mfa_trunc_sqrt2.c"] }
+mpir_test("mpirtest_fft_t-fft_ifft_negacyclic") { sources = ["fft/t-fft_ifft_negacyclic.c"] }
+mpir_test("mpirtest_fft_t-fft_ifft_radix2") { sources = ["fft/t-fft_ifft_radix2.c"] }
+mpir_test("mpirtest_fft_t-fft_ifft_trunc") { sources = ["fft/t-fft_ifft_trunc.c"] }
+mpir_test("mpirtest_fft_t-fft_ifft_trunc_sqrt2") { sources = ["fft/t-fft_ifft_trunc_sqrt2.c"] }
+mpir_test("mpirtest_fft_t-mulmod_2expp1") { sources = ["fft/t-mulmod_2expp1.c"] }
+mpir_test("mpirtest_fft_t-mul_2expmod_2expp1") { sources = ["fft/t-mul_2expmod_2expp1.c"] }
+mpir_test("mpirtest_fft_t-mul_fft_main") { sources = ["fft/t-mul_fft_main.c"] }
+mpir_test("mpirtest_fft_t-mul_mfa_trunc_sqrt2") { sources = ["fft/t-mul_mfa_trunc_sqrt2.c"] }
+mpir_test("mpirtest_fft_t-mul_trunc_sqrt2") { sources = ["fft/t-mul_trunc_sqrt2.c"] }
+mpir_test("mpirtest_fft_t-normmod_2expp1") { sources = ["fft/t-normmod_2expp1.c"] }
+mpir_test("mpirtest_fft_t-split_combine_bits") { sources = ["fft/t-split_combine_bits.c"] }
+
+# mpir_test("mpirtest_misc_t-locale") { sources = ["misc/t-locale.c"] }
+# mpir_test("mpirtest_misc_t-printf") { sources = ["misc/t-printf.c"] }
+# mpir_test("mpirtest_misc_t-scanf") { sources = ["misc/t-scanf.c"] }
+
+mpir_test("mpirtest_mpf_t-add") { sources = ["mpf/t-add.c"] }
+mpir_test("mpirtest_mpf_t-cmp_d") { sources = ["mpf/t-cmp_d.c"] }
+mpir_test("mpirtest_mpf_t-cmp_si") { sources = ["mpf/t-cmp_si.c"] }
+mpir_test("mpirtest_mpf_t-conv") { sources = ["mpf/t-conv.c"] }
+mpir_test("mpirtest_mpf_t-div") { sources = ["mpf/t-div.c"] }
+mpir_test("mpirtest_mpf_t-dm2exp") { sources = ["mpf/t-dm2exp.c"] }
+mpir_test("mpirtest_mpf_t-eq") { sources = ["mpf/t-eq.c"] }
+mpir_test("mpirtest_mpf_t-fits") { sources = ["mpf/t-fits.c"] }
+mpir_test("mpirtest_mpf_t-get_d") { sources = ["mpf/t-get_d.c"] }
+mpir_test("mpirtest_mpf_t-get_d_2exp") { sources = ["mpf/t-get_d_2exp.c"] }
+mpir_test("mpirtest_mpf_t-get_si") { sources = ["mpf/t-get_si.c"] }
+mpir_test("mpirtest_mpf_t-get_ui") { sources = ["mpf/t-get_ui.c"] }
+mpir_test("mpirtest_mpf_t-gsprec") { sources = ["mpf/t-gsprec.c"] }
+mpir_test("mpirtest_mpf_t-inp_str") { sources = ["mpf/t-inp_str.c"] }
+mpir_test("mpirtest_mpf_t-int_p") { sources = ["mpf/t-int_p.c"] }
+mpir_test("mpirtest_mpf_t-muldiv") { sources = ["mpf/t-muldiv.c"] }
+mpir_test("mpirtest_mpf_t-mul_ui") { sources = ["mpf/t-mul_ui.c"] }
+mpir_test("mpirtest_mpf_t-set") { sources = ["mpf/t-set.c"] }
+mpir_test("mpirtest_mpf_t-set_q") { sources = ["mpf/t-set_q.c"] }
+mpir_test("mpirtest_mpf_t-set_si") { sources = ["mpf/t-set_si.c"] }
+mpir_test("mpirtest_mpf_t-set_ui") { sources = ["mpf/t-set_ui.c"] }
+mpir_test("mpirtest_mpf_t-sqrt") { sources = ["mpf/t-sqrt.c"] }
+mpir_test("mpirtest_mpf_t-sqrt_ui") { sources = ["mpf/t-sqrt_ui.c"] }
+mpir_test("mpirtest_mpf_t-sub") { sources = ["mpf/t-sub.c"] }
+mpir_test("mpirtest_mpf_t-trunc") { sources = ["mpf/t-trunc.c"] }
+mpir_test("mpirtest_mpf_t-ui_div") { sources = ["mpf/t-ui_div.c"] }
+
+mpir_test("mpirtest_mpn_t-addadd_n") { sources = ["mpn/t-addadd_n.c"] }
+mpir_test("mpirtest_mpn_t-addsub_n") { sources = ["mpn/t-addsub_n.c"] }
+mpir_test("mpirtest_mpn_t-aors_1") { sources = ["mpn/t-aors_1.c"] }
+mpir_test("mpirtest_mpn_t-asmtype") { sources = ["mpn/t-asmtype.c"] }
+mpir_test("mpirtest_mpn_t-dc_bdiv_q") { sources = ["mpn/t-dc_bdiv_q.c"] }
+mpir_test("mpirtest_mpn_t-dc_bdiv_qr") { sources = ["mpn/t-dc_bdiv_qr.c"] }
+mpir_test("mpirtest_mpn_t-dc_bdiv_qr_n") { sources = ["mpn/t-dc_bdiv_qr_n.c"] }
+mpir_test("mpirtest_mpn_t-dc_bdiv_q_n") { sources = ["mpn/t-dc_bdiv_q_n.c"] }
+mpir_test("mpirtest_mpn_t-dc_divappr_q") { sources = ["mpn/t-dc_divappr_q.c"] }
+mpir_test("mpirtest_mpn_t-dc_div_q") { sources = ["mpn/t-dc_div_q.c"] }
+mpir_test("mpirtest_mpn_t-dc_div_qr") { sources = ["mpn/t-dc_div_qr.c"] }
+mpir_test("mpirtest_mpn_t-dc_div_qr_n") { sources = ["mpn/t-dc_div_qr_n.c"] }
+mpir_test("mpirtest_mpn_t-divebyff") { sources = ["mpn/t-divebyff.c"] }
+mpir_test("mpirtest_mpn_t-divebyfobm1") { sources = ["mpn/t-divebyfobm1.c"] }
+mpir_test("mpirtest_mpn_t-divrem_1") { sources = ["mpn/t-divrem_1.c"] }
+mpir_test("mpirtest_mpn_t-fat") { sources = ["mpn/t-fat.c"] }
+mpir_test("mpirtest_mpn_t-gcdext") { sources = ["mpn/t-gcdext.c"] }
+mpir_test("mpirtest_mpn_t-get_d") { sources = ["mpn/t-get_d.c"] }
+mpir_test("mpirtest_mpn_t-hgcd") { sources = ["mpn/t-hgcd.c"] }
+mpir_test("mpirtest_mpn_t-instrument") { sources = ["mpn/t-instrument.c"] }
+mpir_test("mpirtest_mpn_t-invert") { sources = ["mpn/t-invert.c"] }
+mpir_test("mpirtest_mpn_t-inv_divappr_q") { sources = ["mpn/t-inv_divappr_q.c"] }
+mpir_test("mpirtest_mpn_t-inv_divappr_q_n") { sources = ["mpn/t-inv_divappr_q_n.c"] }
+mpir_test("mpirtest_mpn_t-inv_div_q") { sources = ["mpn/t-inv_div_q.c"] }
+mpir_test("mpirtest_mpn_t-inv_div_qr") { sources = ["mpn/t-inv_div_qr.c"] }
+mpir_test("mpirtest_mpn_t-inv_div_qr_n") { sources = ["mpn/t-inv_div_qr_n.c"] }
+mpir_test("mpirtest_mpn_t-iord_u") { sources = ["mpn/t-iord_u.c"] }
+mpir_test("mpirtest_mpn_t-logic") { sources = ["mpn/t-logic.c"] }
+mpir_test("mpirtest_mpn_t-lorrshift1") { sources = ["mpn/t-lorrshift1.c"] }
+mpir_test("mpirtest_mpn_t-matrix22") { sources = ["mpn/t-matrix22.c"] }
+mpir_test("mpirtest_mpn_t-mp_bases") { sources = ["mpn/t-mp_bases.c"] }
+mpir_test("mpirtest_mpn_t-mullowhigh") { sources = ["mpn/t-mullowhigh.c"] }
+mpir_test("mpirtest_mpn_t-mullow_basecase") { sources = ["mpn/t-mullow_basecase.c"] }
+mpir_test("mpirtest_mpn_t-mulmid") { sources = ["mpn/t-mulmid.c"] }
+mpir_test("mpirtest_mpn_t-mulmod_2expm1") { sources = ["mpn/t-mulmod_2expm1.c"] }
+mpir_test("mpirtest_mpn_t-mulmod_2expp1") { sources = ["mpn/t-mulmod_2expp1.c"] }
+mpir_test("mpirtest_mpn_t-neg") { sources = ["mpn/t-neg.c"] }
+mpir_test("mpirtest_mpn_t-perfsqr") { sources = ["mpn/t-perfsqr.c"] }
+mpir_test("mpirtest_mpn_t-redc_1") { sources = ["mpn/t-redc_1.c"] }
+mpir_test("mpirtest_mpn_t-sb_bdiv_q") { sources = ["mpn/t-sb_bdiv_q.c"] }
+mpir_test("mpirtest_mpn_t-sb_bdiv_qr") { sources = ["mpn/t-sb_bdiv_qr.c"] }
+mpir_test("mpirtest_mpn_t-sb_divappr_q") { sources = ["mpn/t-sb_divappr_q.c"] }
+mpir_test("mpirtest_mpn_t-sb_div_q") { sources = ["mpn/t-sb_div_q.c"] }
+mpir_test("mpirtest_mpn_t-sb_div_qr") { sources = ["mpn/t-sb_div_qr.c"] }
+mpir_test("mpirtest_mpn_t-scan") { sources = ["mpn/t-scan.c"] }
+mpir_test("mpirtest_mpn_t-sizeinbase") { sources = ["mpn/t-sizeinbase.c"] }
+mpir_test("mpirtest_mpn_t-subadd_n") { sources = ["mpn/t-subadd_n.c"] }
+mpir_test("mpirtest_mpn_t-tdiv_q") { sources = ["mpn/t-tdiv_q.c"] }
+mpir_test("mpirtest_mpn_t-tdiv_qr") { sources = ["mpn/t-tdiv_qr.c"] }
+
+
+mpir_test("mpirtest_mpq_t-aors") { sources = ["mpq/t-aors.c"] }
+mpir_test("mpirtest_mpq_t-cmp") { sources = ["mpq/t-cmp.c"] }
+mpir_test("mpirtest_mpq_t-cmp_si") { sources = ["mpq/t-cmp_si.c"] }
+mpir_test("mpirtest_mpq_t-cmp_ui") { sources = ["mpq/t-cmp_ui.c"] }
+mpir_test("mpirtest_mpq_t-cmp_z") { sources = ["mpq/t-cmp_z.c"] }
+mpir_test("mpirtest_mpq_t-equal") { sources = ["mpq/t-equal.c"] }
+mpir_test("mpirtest_mpq_t-get_d") { sources = ["mpq/t-get_d.c"] }
+mpir_test("mpirtest_mpq_t-get_str") { sources = ["mpq/t-get_str.c"] }
+mpir_test("mpirtest_mpq_t-inp_str") { sources = ["mpq/t-inp_str.c"] }
+mpir_test("mpirtest_mpq_t-md_2exp") { sources = ["mpq/t-md_2exp.c"] }
+mpir_test("mpirtest_mpq_t-set_f") { sources = ["mpq/t-set_f.c"] }
+mpir_test("mpirtest_mpq_t-set_str") { sources = ["mpq/t-set_str.c"] }
+
+
+mpir_test("mpirtest_mpz_bit") { sources = ["mpz/bit.c"] }
+mpir_test("mpirtest_mpz_convert") { sources = ["mpz/convert.c"] }
+mpir_test("mpirtest_mpz_dive") { sources = ["mpz/dive.c"] }
+mpir_test("mpirtest_mpz_dive_ui") { sources = ["mpz/dive_ui.c"] }
+mpir_test("mpirtest_mpz_io") { sources = ["mpz/io.c"] }
+mpir_test("mpirtest_mpz_logic") { sources = ["mpz/logic.c"] }
+
+
+mpir_test("mpirtest_mpz_t-addsub") { sources = ["mpz/t-addsub.c"] }
+mpir_test("mpirtest_mpz_t-aorsmul") { sources = ["mpz/t-aorsmul.c"] }
+mpir_test("mpirtest_mpz_t-bin") { sources = ["mpz/t-bin.c"] }
+mpir_test("mpirtest_mpz_t-cdiv_ui") { sources = ["mpz/t-cdiv_ui.c"] }
+mpir_test("mpirtest_mpz_t-cmp") { sources = ["mpz/t-cmp.c"] }
+mpir_test("mpirtest_mpz_t-cmp_d") { sources = ["mpz/t-cmp_d.c"] }
+mpir_test("mpirtest_mpz_t-cmp_si") { sources = ["mpz/t-cmp_si.c"] }
+mpir_test("mpirtest_mpz_t-cong") { sources = ["mpz/t-cong.c"] }
+mpir_test("mpirtest_mpz_t-cong_2exp") { sources = ["mpz/t-cong_2exp.c"] }
+mpir_test("mpirtest_mpz_t-divis") { sources = ["mpz/t-divis.c"] }
+mpir_test("mpirtest_mpz_t-divis_2exp") { sources = ["mpz/t-divis_2exp.c"] }
+mpir_test("mpirtest_mpz_t-div_2exp") { sources = ["mpz/t-div_2exp.c"] }
+mpir_test("mpirtest_mpz_t-export") { sources = ["mpz/t-export.c"] }
+mpir_test("mpirtest_mpz_t-fac_ui") { sources = ["mpz/t-fac_ui.c"] }
+mpir_test("mpirtest_mpz_t-fdiv") { sources = ["mpz/t-fdiv.c"] }
+mpir_test("mpirtest_mpz_t-fdiv_ui") { sources = ["mpz/t-fdiv_ui.c"] }
+mpir_test("mpirtest_mpz_t-fib_ui") { sources = ["mpz/t-fib_ui.c"] }
+mpir_test("mpirtest_mpz_t-fits") { sources = ["mpz/t-fits.c"] }
+mpir_test("mpirtest_mpz_t-gcd") { sources = ["mpz/t-gcd.c"] }
+mpir_test("mpirtest_mpz_t-gcd_ui") { sources = ["mpz/t-gcd_ui.c"] }
+mpir_test("mpirtest_mpz_t-get_d") { sources = ["mpz/t-get_d.c"] }
+mpir_test("mpirtest_mpz_t-get_d_2exp") { sources = ["mpz/t-get_d_2exp.c"] }
+mpir_test("mpirtest_mpz_t-get_si") { sources = ["mpz/t-get_si.c"] }
+mpir_test("mpirtest_mpz_t-get_sx") { sources = ["mpz/t-get_sx.c"] }
+mpir_test("mpirtest_mpz_t-get_ux") { sources = ["mpz/t-get_ux.c"] }
+mpir_test("mpirtest_mpz_t-hamdist") { sources = ["mpz/t-hamdist.c"] }
+mpir_test("mpirtest_mpz_t-import") { sources = ["mpz/t-import.c"] }
+mpir_test("mpirtest_mpz_t-inp_str") { sources = ["mpz/t-inp_str.c"] }
+mpir_test("mpirtest_mpz_t-io_raw") { sources = ["mpz/t-io_raw.c"] }
+mpir_test("mpirtest_mpz_t-jac") { sources = ["mpz/t-jac.c"] }
+mpir_test("mpirtest_mpz_t-lcm") { sources = ["mpz/t-lcm.c"] }
+mpir_test("mpirtest_mpz_t-likely_prime_p") { sources = ["mpz/t-likely_prime_p.c"] }
+mpir_test("mpirtest_mpz_t-limbs") { sources = ["mpz/t-limbs.c"] }
+mpir_test("mpirtest_mpz_t-lucnum_ui") { sources = ["mpz/t-lucnum_ui.c"] }
+mpir_test("mpirtest_mpz_t-mfac_uiui") { sources = ["mpz/t-mfac_uiui.c"] }
+mpir_test("mpirtest_mpz_t-mul") { sources = ["mpz/t-mul.c"] }
+mpir_test("mpirtest_mpz_t-mul_i") { sources = ["mpz/t-mul_i.c"] }
+mpir_test("mpirtest_mpz_t-next_prime_candidate") { sources = ["mpz/t-next_prime_candidate.c"] }
+mpir_test("mpirtest_mpz_t-oddeven") { sources = ["mpz/t-oddeven.c"] }
+mpir_test("mpirtest_mpz_t-perfpow") { sources = ["mpz/t-perfpow.c"] }
+mpir_test("mpirtest_mpz_t-perfsqr") { sources = ["mpz/t-perfsqr.c"] }
+mpir_test("mpirtest_mpz_t-popcount") { sources = ["mpz/t-popcount.c"] }
+mpir_test("mpirtest_mpz_t-pow") { sources = ["mpz/t-pow.c"] }
+mpir_test("mpirtest_mpz_t-powm") { sources = ["mpz/t-powm.c"] }
+mpir_test("mpirtest_mpz_t-powm_ui") { sources = ["mpz/t-powm_ui.c"] }
+mpir_test("mpirtest_mpz_t-pprime_p") { sources = ["mpz/t-pprime_p.c"] }
+mpir_test("mpirtest_mpz_t-primorial_ui") { sources = ["mpz/t-primorial_ui.c"] }
+mpir_test("mpirtest_mpz_t-root") { sources = ["mpz/t-root.c"] }
+mpir_test("mpirtest_mpz_t-scan") { sources = ["mpz/t-scan.c"] }
+mpir_test("mpirtest_mpz_t-set_d") { sources = ["mpz/t-set_d.c"] }
+mpir_test("mpirtest_mpz_t-set_f") { sources = ["mpz/t-set_f.c"] }
+mpir_test("mpirtest_mpz_t-set_si") { sources = ["mpz/t-set_si.c"] }
+mpir_test("mpirtest_mpz_t-set_str") { sources = ["mpz/t-set_str.c"] }
+mpir_test("mpirtest_mpz_t-set_sx") { sources = ["mpz/t-set_sx.c"] }
+mpir_test("mpirtest_mpz_t-set_ux") { sources = ["mpz/t-set_ux.c"] }
+mpir_test("mpirtest_mpz_t-sizeinbase") { sources = ["mpz/t-sizeinbase.c"] }
+mpir_test("mpirtest_mpz_t-sqrtrem") { sources = ["mpz/t-sqrtrem.c"] }
+mpir_test("mpirtest_mpz_t-tdiv") { sources = ["mpz/t-tdiv.c"] }
+mpir_test("mpirtest_mpz_t-tdiv_ui") { sources = ["mpz/t-tdiv_ui.c"] }
+mpir_test("mpirtest_mpz_t-trial_division") { sources = ["mpz/t-trial_division.c"] }
+
+mpir_test("mpirtest_rand_t-iset") { sources = ["rand/t-iset.c"] }
+mpir_test("mpirtest_rand_t-lc2exp") { sources = ["rand/t-lc2exp.c"] }
+mpir_test("mpirtest_rand_t-mt") { sources = ["rand/t-mt.c"] }
+mpir_test("mpirtest_rand_t-rand") { sources = ["rand/t-rand.c"] }
+mpir_test("mpirtest_rand_t-urbui") { sources = ["rand/t-urbui.c"] }
+mpir_test("mpirtest_rand_t-urmui") { sources = ["rand/t-urmui.c"] }
+mpir_test("mpirtest_rand_t-urndmm") { sources = ["rand/t-urndmm.c"] }
