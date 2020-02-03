@@ -52,7 +52,7 @@ group("mpir_static") {
 }
 
 source_set("mpir_root") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "assert.c",
@@ -89,7 +89,7 @@ source_set("mpir_root") {
 }
 
 source_set("mpir_cxx") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "cxx/dummy.cc",
@@ -107,7 +107,7 @@ source_set("mpir_cxx") {
 }
 
 source_set("mpir_fft") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "fft/adjust.c",
@@ -140,7 +140,7 @@ source_set("mpir_fft") {
 }
 
 source_set("mpir_mpf") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "mpf/abs.c",
@@ -219,7 +219,7 @@ source_set("mpir_mpf") {
 }
 
 source_set("mpir_mpn_generic") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "mpn/generic/add.c",
@@ -396,7 +396,7 @@ source_set("mpir_mpn_generic") {
 }
 
 source_set("mpir_mpq") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "mpq/abs.c",
@@ -435,7 +435,7 @@ source_set("mpir_mpq") {
 }
 
 source_set("mpir_mpz") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "mpz/2fac_ui.c",
@@ -615,7 +615,7 @@ source_set("mpir_mpz") {
 }
 
 source_set("mpir_printf") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "printf/asprintf.c",
@@ -643,7 +643,7 @@ source_set("mpir_printf") {
 }
 
 source_set("mpir_scanf") {
-  configs = [":mpir_config"]
+  configs += [":mpir_config"]
 
   sources = [
     "scanf/doscan.c",
